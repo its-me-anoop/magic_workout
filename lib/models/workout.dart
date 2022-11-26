@@ -14,7 +14,7 @@ class Workout extends Equatable {
     var index = 0;
 
     for (final ex in json['exercises'] as Iterable) {
-      exercises.add(Exercise.fromJson(json, index));
+      exercises.add(Exercise.fromJson(ex as Map<String, dynamic>, index));
       index++;
     }
     return Workout(title: json['title'] as String?, exercises: exercises);

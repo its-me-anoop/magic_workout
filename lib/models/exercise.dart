@@ -25,6 +25,20 @@ class Exercise extends Equatable {
         'repetitions': repetitions,
       };
 
+  ///
+  Exercise copyWith({
+    String? title,
+    int? weight,
+    int? repetitions,
+    int? index,
+  }) =>
+      Exercise(
+        title: title ?? this.title,
+        weight: weight ?? this.weight,
+        repetitions: repetitions ?? this.repetitions,
+        index: index ?? this.index,
+      );
+
   /// [title] or workout type
   final String? title;
 
