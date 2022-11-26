@@ -111,6 +111,20 @@ class Exercise extends Equatable {
         'repetitions': repetitions,
       };
 
+  ///
+  Exercise copyWith({
+    String? title,
+    int? weight,
+    int? repetitions,
+    int? index,
+  }) =>
+      Exercise(
+        title: title ?? this.title,
+        weight: weight ?? this.weight,
+        repetitions: repetitions ?? this.repetitions,
+        index: index ?? this.index,
+      );
+
   /// [title] or workout type
   final String? title;
 
@@ -168,7 +182,7 @@ class Workout extends Equatable {
     var index = 0;
 
     for (final ex in json['exercises'] as Iterable) {
-      exercises.add(Exercise.fromJson(json, index));
+      exercises.add(Exercise.fromJson(ex as Map<String, dynamic>, index));
       index++;
     }
     return Workout(title: json['title'] as String?, exercises: exercises);
@@ -189,4 +203,16 @@ class Workout extends Equatable {
   @override
   bool get stringify => true;
 }
+```
+
+## Project Structure
+
+```sh
+|-- lib
+    |-- blocs
+    |   |-- cubit
+    |   |-- states
+    |-- models
+    |-- pages
+    |-- main.dart
 ```
