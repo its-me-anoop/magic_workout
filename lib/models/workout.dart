@@ -6,15 +6,15 @@ import 'package:magic_workout/models/exercise.dart';
 /// [Workout] model
 class Workout extends Equatable {
   /// [Workout] consists of [title] and [exercises]
-  const Workout({required this.title, required this.exercises});
+  Workout({required this.title, required this.exercises});
 
   /// Json to Object
   factory Workout.fromJson(Map<String, dynamic> json) {
-    final exercises = <Exercise>[];
+    List<Exercise> exercises = [];
     var index = 0;
 
-    for (final ex in json['exercises'] as Iterable) {
-      exercises.add(Exercise.fromJson(ex as Map<String, dynamic>, index));
+    for (var ex in json['exercises'] as Iterable) {
+      exercises.add(Exercise.fromJson(ex as Map<String, dynamic>));
       index++;
     }
     return Workout(title: json['title'] as String?, exercises: exercises);
@@ -24,10 +24,10 @@ class Workout extends Equatable {
   Map<String, dynamic> toJson() => {'title': title, 'exercises': exercises};
 
   /// [title] of a [Workout]
-  final String? title;
+  String? title;
 
   /// [exercises] or sets in each [Workout]
-  final List<Exercise> exercises;
+  List<Exercise> exercises;
 
   @override
   List<Object?> get props => [title, exercises];

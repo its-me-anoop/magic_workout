@@ -9,7 +9,7 @@ import 'package:magic_workout/models/models.dart';
 import 'package:magic_workout/pages/edit_exercise.dart';
 
 class EditPage extends StatelessWidget {
-  const EditPage({Key? key}) : super(key: key);
+  const EditPage({super.key});
 
   @override
   Widget build(BuildContext context) => BlocBuilder<WorkoutCubit, WorkoutState>(
@@ -17,40 +17,44 @@ class EditPage extends StatelessWidget {
           WorkoutEditing we = state as WorkoutEditing;
           return Scaffold(
             appBar: AppBar(
-                leading: BackButton(
-                    onPressed: () =>
-                        BlocProvider.of<WorkoutCubit>(context).goHome()),
-                title: Text(we.workout!.title!),
-                actions: [
-                  IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        BlocProvider.of<WorkoutsCubit>(context)
-                            .deleteWorkout(state.workout);
-                        BlocProvider.of<WorkoutCubit>(context).goHome();
-                      })
-                ]),
+              leading: BackButton(
+                onPressed: () =>
+                    BlocProvider.of<WorkoutCubit>(context).goHome(),
+              ),
+              title: Text(we.workout!.title!),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    BlocProvider.of<WorkoutsCubit>(context)
+                        .deleteWorkout(state.workout);
+                    BlocProvider.of<WorkoutCubit>(context).goHome();
+                  },
+                )
+              ],
+            ),
             body: ListView.builder(
-                itemCount: state.workout!.exercises.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Exercise exercise = we.workout!.exercises[index];
-                  if (we.exIndex == index) {
-                    return EditExercise(we.workout, we.index, we.exIndex);
-                  } else {
-                    return ListTile(
-                        leading: Text('${exercise.weight.toString()} Kg'),
-                        title: Text(exercise.title!),
-                        trailing:
-                            Text('${exercise.repetitions.toString()} times'),
-                        onTap: () => BlocProvider.of<WorkoutCubit>(context)
-                            .editExercise(index));
-                  }
-                }),
+              itemCount: state.workout!.exercises.length,
+              itemBuilder: (BuildContext context, int index) {
+                Exercise exercise = we.workout!.exercises[index];
+                if (we.exIndex == index) {
+                  return EditExercise(we.workout, we.index, we.exIndex);
+                } else {
+                  return ListTile(
+                    leading: Text('${exercise.weight.toString()} Kg'),
+                    title: Text(exercise.title!),
+                    trailing: Text('${exercise.repetitions.toString()} times'),
+                    onTap: () => BlocProvider.of<WorkoutCubit>(context)
+                        .editExercise(index),
+                  );
+                }
+              },
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                state.workout!.exercises.add(
-                  const Exercise(title: 'Barbell', weight: 0, repetitions: 1),
-                );
+                BlocProvider.of<WorkoutCubit>(context)
+                    .addExercise(we.workout!.exercises);
+
                 BlocProvider.of<WorkoutCubit>(context)
                     .editExercise(we.workout!.exercises.length - 1);
               },

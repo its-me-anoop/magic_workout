@@ -1,4 +1,4 @@
-// ignore_for_file: always_declare_return_types, inference_failure_on_function_return_type, lines_longer_than_80_chars, type_annotate_public_apis
+// ignore_for_file: always_declare_return_types, inference_failure_on_function_return_type, lines_longer_than_80_chars, type_annotate_public_apis, unused_local_variable
 
 import 'dart:convert';
 
@@ -22,14 +22,15 @@ class WorkoutsCubit extends HydratedCubit<List<Workout>> {
     emit(workouts);
   }
 
+  /// Save Workout
   saveWorkout(Workout workout, int index) {
     // ignore: prefer_const_literals_to_create_immutables
     final newWorkout = Workout(title: workout.title, exercises: []);
     var exIndex = 0;
 
-    for (final ex in workout.exercises) {
+    for (var ex in workout.exercises) {
       newWorkout.exercises.add(
-        Exercise(title: ex.title, index: exIndex, weight: 0, repetitions: 1),
+        Exercise(title: 'Barbell', weight: 0, repetitions: 1),
       );
       exIndex++;
     }
@@ -41,16 +42,24 @@ class WorkoutsCubit extends HydratedCubit<List<Workout>> {
     emit([...state]);
   }
 
-  createWorkout(String title) =>
-      emit([Workout(title: title, exercises: const []), ...state]);
+  /// Create Workout
+  createWorkout(String title) => emit([
+        Workout(
+            title: title,
+            exercises: [Exercise(title: 'Barbell', weight: 0, repetitions: 1)]),
+        ...state
+      ]);
 
+  /// Import Workout from Json
   importWorkout(String json) => emit(
         [Workout.fromJson(jsonDecode(json) as Map<String, dynamic>), ...state],
       );
 
+  /// Delete Workout
   deleteWorkout(Workout? workout) =>
       emit(state.where((el) => el != workout).toList());
 
+  /// Required for Hydrated Bloc to read data from local storage
   @override
   List<Workout> fromJson(Map<String, dynamic> json) {
     var workouts = <Workout>[];
@@ -60,12 +69,12 @@ class WorkoutsCubit extends HydratedCubit<List<Workout>> {
     return workouts;
   }
 
+  /// Required for Hydrated Bloc to write data from local storage
   @override
   Map<String, dynamic>? toJson(List<Workout> state) {
     if (state is List<Workout>) {
       var json = {'workouts': []};
-      for (final workout in state) {
-        print("..in toJson..");
+      for (var workout in state) {
         json['workouts']!.add(workout.toJson());
       }
       return json;
