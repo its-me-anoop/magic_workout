@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magic_workout/cubits/workouts_cubit.dart';
+import 'package:magic_workout/blocs/cubit/workout_cubit.dart';
+import 'package:magic_workout/blocs/cubit/workouts_cubit.dart';
 import 'package:magic_workout/models/workout.dart';
 
 /// Home Page
@@ -13,10 +14,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Magic Workout'),
-        actions: const [
-          IconButton(onPressed: null, icon: Icon(Icons.add)),
-          IconButton(onPressed: null, icon: Icon(Icons.settings))
-        ],
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<WorkoutsCubit, List<Workout>>(
@@ -29,11 +26,17 @@ class HomePage extends StatelessWidget {
                       visualDensity: const VisualDensity(
                         vertical: VisualDensity.maximumDensity,
                       ),
-                      leading: const IconButton(
-                        onPressed: null,
+                      leading: IconButton(
+                        onPressed: () => BlocProvider.of<WorkoutCubit>(context)
+                            .editWorkout(workout, workouts.indexOf(workout)),
                         icon: Icon(Icons.edit),
                       ),
-                      title: Text(workout.title!),
+                      title: Text(
+                        workout.title!,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      trailing:
+                          Text('${workout.exercises.length.toString()} sets'),
                     ),
                     body: ListView.builder(
                       shrinkWrap: true,
@@ -42,12 +45,14 @@ class HomePage extends StatelessWidget {
                         visualDensity: const VisualDensity(
                           vertical: VisualDensity.maximumDensity,
                         ),
-                        leading: const IconButton(
-                          onPressed: null,
-                          icon: Icon(Icons.edit),
+                        leading: Text(
+                          '${workout.exercises[index].weight!.toString()} Kg',
                         ),
                         title: Text(
                           workout.exercises[index].title!,
+                        ),
+                        trailing: Text(
+                          '${workout.exercises[index].repetitions!.toString()} times',
                         ),
                       ),
                     ),
@@ -56,6 +61,13 @@ class HomePage extends StatelessWidget {
                 .toList(),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          BlocProvider.of<WorkoutsCubit>(context)
+              .createWorkout(DateTime.now().toString());
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
