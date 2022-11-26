@@ -84,10 +84,12 @@ samples, guidance on mobile development, and a full API reference.
 ```
 
 ```dart
+import 'package:equatable/equatable.dart';
+
 /// [Exercise] model
-class Exercise {
+class Exercise extends Equatable {
   /// [Exercise] consists of [title], [weight], [repetitions] and [index]
-  Exercise({
+  const Exercise({
     required this.title,
     required this.weight,
     required this.repetitions,
@@ -120,6 +122,12 @@ class Exercise {
 
   /// [index] is used to identify exercises
   final int? index;
+
+  @override
+  List<Object?> get props => [title, weight, repetitions, index];
+
+  @override
+  bool get stringify => true;
 }
 ```
 
@@ -144,10 +152,13 @@ class Exercise {
 ```
 
 ```dart
+// ignore_for_file: unused_local_variable
+
+import 'package:equatable/equatable.dart';
 import 'package:magic_workout/models/exercise.dart';
 
 /// [Workout] model
-class Workout {
+class Workout extends Equatable {
   /// [Workout] consists of [title] and [exercises]
   const Workout({required this.title, required this.exercises});
 
@@ -171,5 +182,11 @@ class Workout {
 
   /// [exercises] or sets in each [Workout]
   final List<Exercise> exercises;
+
+  @override
+  List<Object?> get props => [title, exercises];
+
+  @override
+  bool get stringify => true;
 }
 ```

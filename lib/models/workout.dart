@@ -1,7 +1,10 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:equatable/equatable.dart';
 import 'package:magic_workout/models/exercise.dart';
 
 /// [Workout] model
-class Workout {
+class Workout extends Equatable {
   /// [Workout] consists of [title] and [exercises]
   const Workout({required this.title, required this.exercises});
 
@@ -25,4 +28,10 @@ class Workout {
 
   /// [exercises] or sets in each [Workout]
   final List<Exercise> exercises;
+
+  @override
+  List<Object?> get props => [title, exercises];
+
+  @override
+  bool get stringify => true;
 }

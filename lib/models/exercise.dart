@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 /// [Exercise] model
-class Exercise {
+class Exercise extends Equatable {
   /// [Exercise] consists of [title], [weight], [repetitions] and [index]
-  Exercise({
+  const Exercise({
     required this.title,
     required this.weight,
     required this.repetitions,
@@ -34,4 +36,10 @@ class Exercise {
 
   /// [index] is used to identify exercises
   final int? index;
+
+  @override
+  List<Object?> get props => [title, weight, repetitions, index];
+
+  @override
+  bool get stringify => true;
 }
