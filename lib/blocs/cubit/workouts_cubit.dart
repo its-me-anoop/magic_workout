@@ -14,29 +14,20 @@ class WorkoutsCubit extends HydratedCubit<List<Workout>> {
   /// Get all workouts
   getWorkouts() async {
     final workouts = <Workout>[];
-    final workoutsJson =
-        jsonDecode(await rootBundle.loadString('assets/workouts.json'));
-    for (final el in workoutsJson as Iterable) {
-      workouts.add(Workout.fromJson(el as Map<String, dynamic>));
-    }
+    // final workoutsJson =
+    //     jsonDecode(await rootBundle.loadString('assets/workouts.json'));
+    // for (var el in workoutsJson as Iterable) {
+    //   workouts.add(Workout.fromJson(el as Map<String, dynamic>));
+    // }
     emit(workouts);
   }
 
   /// Save Workout
   saveWorkout(Workout workout, int index) {
     // ignore: prefer_const_literals_to_create_immutables
-    final newWorkout = Workout(title: workout.title, exercises: []);
-    var exIndex = 0;
+    final newWorkout =
+        Workout(title: workout.title, exercises: workout.exercises);
 
-    for (var ex in workout.exercises) {
-      newWorkout.exercises.add(
-        Exercise(title: 'Barbell', weight: 0, repetitions: 1),
-      );
-      exIndex++;
-    }
-    /*
-    because we have a list of states we we could do index
-     */
     state[index] = newWorkout;
 
     emit([...state]);

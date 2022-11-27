@@ -1,6 +1,6 @@
 # magic_workout
 
-A new Flutter project.
+Create, Edit and Delete your workouts
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ---
 
-## Workout Data
+## Sample Workout Data
 
 ```json
 [
@@ -214,5 +214,56 @@ class Workout extends Equatable {
     |   |-- states
     |-- models
     |-- pages
+    |-- app.dart
+    |-- bloc_observer.dart
     |-- main.dart
 ```
+
+## Clean Architecture
+
+Clean Architecture focuses on dividing software into layers, to simplify the development and maintenance of the system itself. When layers are well-separated, individual pieces can be reused, as well as developed and updated independently.
+
+### 1. Feature Layer
+
+Feature Layer is the presentation layer of the application, it is the most framework-dependent layer, as it contains the UI and the event handlers of the UI.
+
+### 2. Domain Layer
+
+Domain Layer is the innermost part of the layers (no dependencies with other layers) and it contains Entities, Use Cases & Repository Interfaces.
+
+### 3. Data Layer
+
+Represents the data layer of the application. The Data module, which is a part of the outermost layer, is responsible for data retrieval. This can be in the form of API calls to a server and/or a local database. It also contains repository implementations.
+
+---
+
+## Third party packages
+
+1. ```equatable:```
+
+    Equatable helps to compare values in a class / model
+
+2. ```flutter_bloc:```
+
+    Bloc state management
+
+3. ```hydrated_bloc:```
+
+    Local Storage. HydratedStorage is built on top of hive for a platform-agnostic, performant storage layer
+
+4. ```path_provider:```
+
+    To obtain path to local device storage
+
+5. ```bloc_test:```
+
+    Bloc and Cubit testing
+
+6. ```mocktail:```
+
+    To use Mocks in testing
+
+7. ```very_good_analysis:```
+
+    This package provides lint rules for Dart and Flutter
+

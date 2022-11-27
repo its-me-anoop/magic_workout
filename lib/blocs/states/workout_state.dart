@@ -2,42 +2,24 @@ import 'package:equatable/equatable.dart';
 import 'package:magic_workout/models/models.dart';
 
 abstract class WorkoutState extends Equatable {
+  const WorkoutState(this.workout, this.elapsed);
   final Workout? workout;
-
-  const WorkoutState(
-    this.workout,
-  );
+  final int? elapsed;
 }
 
 class WorkoutInitial extends WorkoutState {
-  const WorkoutInitial() : super(null);
+  const WorkoutInitial() : super(null, 0);
 
   @override
   List<Object> get props => [];
 }
 
-class WorkoutInProgress extends WorkoutState {
-  const WorkoutInProgress(Workout? workout, int? elapsed) : super(workout);
-
-  @override
-  List<Object?> get props => [workout];
-}
-
-class WorkoutPaused extends WorkoutState {
-  const WorkoutPaused(Workout? workout, int? elapsed) : super(workout);
-
-  @override
-  List<Object?> get props => [workout];
-}
-
 class WorkoutEditing extends WorkoutState {
+  const WorkoutEditing(Workout? workout, this.index, this.exIndex)
+      : super(workout, 0);
   final int index;
   final int? exIndex;
-  final List<Exercise>? exercises;
-  const WorkoutEditing(
-      Workout? workout, this.index, this.exIndex, this.exercises)
-      : super(workout);
 
   @override
-  List<Object?> get props => [workout, index, exIndex, exercises];
+  List<Object?> get props => [workout, index, exIndex];
 }

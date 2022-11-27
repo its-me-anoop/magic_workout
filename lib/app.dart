@@ -14,8 +14,9 @@ class MagicWorkout extends StatelessWidget {
     return MaterialApp(
       title: 'Magic Workout',
       theme: ThemeData(
+        useMaterial3: true,
         brightness: Brightness.dark,
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.orange,
       ),
       home: MultiBlocProvider(
         providers: [
@@ -34,12 +35,10 @@ class MagicWorkout extends StatelessWidget {
         ],
         child: BlocBuilder<WorkoutCubit, WorkoutState>(
           builder: (context, state) {
-            if (state is WorkoutInitial) {
-              return const HomePage();
-            } else if (state is WorkoutEditing) {
+            if (state is WorkoutEditing) {
               return const EditPage();
             } else {
-              return const WorkoutPage();
+              return const HomePage();
             }
           },
         ),
