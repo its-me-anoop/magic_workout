@@ -266,4 +266,3 @@ Represents the data layer of the application. The Data module, which is a part o
 7. ```very_good_analysis:```
 
     This package provides lint rules for Dart and Flutter
-
