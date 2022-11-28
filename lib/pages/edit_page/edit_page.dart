@@ -50,8 +50,8 @@ class EditPage extends StatelessWidget {
                                 leading:
                                     Text('${exercise.weight.toString()} kg'),
                                 title: Text(exercise.title!),
-                                trailing:
-                                    Text('${exercise.weight.toString()} times'),
+                                trailing: Text(
+                                    '${exercise.repetitions.toString()} times'),
                                 onTap: () =>
                                     BlocProvider.of<WorkoutCubit>(context)
                                         .editExercise(index)),
